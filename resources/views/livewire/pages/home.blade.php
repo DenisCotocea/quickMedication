@@ -58,7 +58,7 @@
                         {{ __('Our Categories') }}
                     </h2>
 
-                    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                         @foreach ($categories as $category)
                             <x-category.card :category="$category" />
                         @endforeach
