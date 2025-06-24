@@ -16,6 +16,10 @@ class Home extends Component
 {
     public function render(): View
     {
+        if (request()->has('clickid')) {
+            cookie()->queue(cookie('clickid', request()->clickid, 60 * 24 * 7));
+        }
+
         return view('livewire.pages.home', [
             'products' => Product::with([
                 'brand',

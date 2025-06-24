@@ -8,6 +8,7 @@ use Darryldecode\Cart\Facades\CartFacade;
 use Illuminate\Support\Facades\Auth;
 use Shopper\Core\Models\Country;
 use Shopper\Core\Models\Order;
+use Illuminate\Support\Facades\Cookie;
 use Shopper\Core\Models\OrderAddress;
 use Shopper\Core\Models\OrderItem;
 
@@ -65,6 +66,7 @@ class CreateOrder
             'billing_address_id' => $billingAddress->id,
             'shipping_option_id' => data_get($checkout, 'shipping_option')[0]['id'],
             'payment_method_id' => data_get($checkout, 'payment')[0]['id'],
+            'clickid' => Cookie::get('clickid'),
         ]);
 
         // @phpstan-ignore-next-line
