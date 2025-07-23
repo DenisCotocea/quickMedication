@@ -1,4 +1,5 @@
 <header class="sticky top-0 z-20 border-b border-gray-200 bg-white bg-opacity-80 backdrop-blur-xl backdrop-filter">
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <x-banner />
     <x-container class="flex items-center justify-between px-4 py-2">
         <nav role="navigation" class="flex items-center gap-10">

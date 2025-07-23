@@ -8,6 +8,9 @@ use Darryldecode\Cart\CartCollection;
 use Darryldecode\Cart\CartCondition;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 use Livewire\Attributes\Validate;
 use Spatie\LivewireWizard\Components\StepComponent;
 
@@ -21,6 +24,12 @@ class Prescription extends StepComponent
     public bool $hasSteroidsMedicinesCategory = false;
     public bool $hasWeightLossCategory = false;
     public bool $hasBirthControlCategory = false;
+
+    //For Auth
+    public ?string $email = null;
+    public ?string $first_name = null;
+    public ?string $last_name = null;
+    //
 
     public ?string $dob = null;
     public ?string $sex = null;
@@ -54,6 +63,9 @@ class Prescription extends StepComponent
     public function rules(): array
     {
         $rules = [
+            'email' => 'required|email',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
             'dob' => 'required|date|before:-18 years',
             'sex' => 'required|in:Male,Female,Other',
             'height' => 'required|numeric|min:50|max:250',
@@ -79,7 +91,7 @@ class Prescription extends StepComponent
         return $rules;
     }
 
-    public function save(): void
+    public function save()
     {
         $this->validate();
 
@@ -103,6 +115,9 @@ class Prescription extends StepComponent
         // Store prescription data
         session()->put('checkout.prescription', [
             'general' => [
+                'first_name' => $this->first_name,
+                'last_name' => $this->last_name,
+                'email' => $this->email,
                 'dob' => $this->dob,
                 'sex' => $this->sex,
                 'height' => $this->height,
@@ -118,8 +133,24 @@ class Prescription extends StepComponent
             'hasBirthControlCategory_acknowledged' => in_array('hasBirthControlCategory_summary', $this->acknowledgements),
         ]);
 
+        if (!Auth::check()) {
+            $password = Str::random(12);
+
+            $user = User::create([
+                'first_name' => $this->first_name,
+                'last_name' => $this->last_name,
+                'email' => $this->email,
+                'password' => Hash::make($password),
+            ]);
+
+            Auth::login($user);
+        }
+
         UserForm::create([
             'user_id' => Auth::id(),
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
+            'email' => $this->email,
             'dob' => $this->dob,
             'sex' => $this->sex,
             'height' => $this->height,
@@ -143,6 +174,10 @@ class Prescription extends StepComponent
     public function messages(): array
     {
         return [
+            'email.required' => 'Email is required.',
+            'email.email' => 'Email is invalid.',
+            'first_name.required' => 'First name is required.',
+            'last_name.required' => 'Last name is required.',
             'dob.required' => 'Date of birth is required.',
             'dob.before' => 'You must be at least 18 years old.',
             'sex.required' => 'Biological sex is required.',

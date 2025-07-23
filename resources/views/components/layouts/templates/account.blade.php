@@ -27,6 +27,13 @@
                             :title="__('Orders')"
                             :active="request()->routeIs('account.orders*')"
                         />
+                        @hasrole('administrator')
+                            <x-nav.account-link
+                                :href="route('articles.index')"
+                                :title="__('Articles')"
+                                :active="request()->routeIs('articles.index*')"
+                            />
+                        @endhasrole
                     </nav>
                 </div>
             </div>

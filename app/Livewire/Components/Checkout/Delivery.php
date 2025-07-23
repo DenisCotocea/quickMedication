@@ -33,7 +33,7 @@ class Delivery extends StepComponent
 
         /** @var ?Zone $zone */
         // @phpstan-ignore-next-line
-        $zone = $country->zones()
+        $zone = $country?->zones()
             ->with('shippingOptions')
             ->where('is_enabled', true)
             ->first();

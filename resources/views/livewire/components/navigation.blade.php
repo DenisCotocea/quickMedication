@@ -17,4 +17,5 @@ state([
     @foreach ($categories as $category)
         <x-nav.item href="{{ route('category-view', $category->id) }}"> {{ $category->name }}</x-nav.item>
     @endforeach
+        <x-nav.item href="{{ route('article-view') }}">Articles</x-nav.item>
 </div>

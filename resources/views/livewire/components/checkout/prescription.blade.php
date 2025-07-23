@@ -22,6 +22,22 @@
         @endif
 
         <div class="max-w-lg mx-auto lg:max-w-none space-y-6">
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700">{{ __('First Name') }}</label>
+                <input wire:model="first_name" class="w-full mt-1 border-gray-300 rounded-md shadow-sm" />
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700">{{ __('Last Name') }}</label>
+                <input wire:model="last_name" class="w-full mt-1 border-gray-300 rounded-md shadow-sm" />
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700">{{ __('Email') }}</label>
+                <input wire:model="email" class="w-full mt-1 border-gray-300 rounded-md shadow-sm" />
+            </div>
+
             <div>
                 <label class="block text-sm font-medium text-gray-700">{{ __('Date of Birth') }}</label>
                 <input type="date" wire:model="dob" class="w-full mt-1 border-gray-300 rounded-md shadow-sm" />
